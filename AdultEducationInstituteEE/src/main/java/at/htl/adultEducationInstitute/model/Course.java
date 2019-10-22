@@ -7,25 +7,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Course {
 
-    private Long courseID;          //KursID
+    private Long id;          //KursID
     private String courseName;      //Kursname
     private int amountBookings;     //Anzahl von Buchungen
 
     public Course() {
     }
 
-    public Course(Long courseID, String courseName, int amountBookings) {
-        this.courseID = courseID;
+    public Course(Long id, String courseName, int amountBookings) {
+        this.id = id;
         this.courseName = courseName;
         this.amountBookings = amountBookings;
     }
 
-    public Long getCourseID() {
-        return courseID;
+    public Long getId() {
+        return id;
     }
 
-    public void setCourseID(Long courseID) {
-        this.courseID = courseID;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCourseName() {

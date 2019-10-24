@@ -26,11 +26,12 @@ public class CourseEndpoint {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Course getEnglisch(@PathParam("id") long id){
+    public Course getOne(@PathParam("id") long id){
         return em.find(Course.class, id);
     }
 
     @GET
+    @Path("findAll")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Course> getAll(){
         return em.createNamedQuery("Course.findAll", Course.class).getResultList();

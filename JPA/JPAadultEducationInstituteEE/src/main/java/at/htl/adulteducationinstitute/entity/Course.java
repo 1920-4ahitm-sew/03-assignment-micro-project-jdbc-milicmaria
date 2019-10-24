@@ -52,6 +52,6 @@ public class Course {
 
     @Override
     public String toString() {
-        return String.format("%d: %s %s", id, courseName, amoutBookings);
+        return String.format("%d: %s %d", id, courseName, amoutBookings);
     }
 }

@@ -30,11 +30,11 @@ public class CourseEndpoint {
         return em.find(Course.class, id);
     }
 
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public List<Course> getAll(){
-//        return em.createNamedQuery("Course.findAll", Course.class).getResultList();
-//    }
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Course> getAll(){
+        return em.createNamedQuery("Course.findAll", Course.class).getResultList();
+    }
 
 
 }

@@ -1,12 +1,19 @@
 package at.htl.adulteducationinstitute.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="COURSE")
+//@NamedQueries(
+//        @NamedQuery(
+//                name = "Course.findAll",
+//                query = "select c from Course c"
+//        )
+//)
+
 public class Course {
 
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String courseName;
     private int amoutBookings;
@@ -41,5 +48,10 @@ public class Course {
 
     public void setAmoutBookings(int amoutBookings) {
         this.amoutBookings = amoutBookings;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%d: %s %s", id, courseName, amoutBookings);
     }
 }

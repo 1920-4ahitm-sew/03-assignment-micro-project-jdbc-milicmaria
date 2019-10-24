@@ -4,12 +4,12 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="COURSE")
-//@NamedQueries(
-//        @NamedQuery(
-//                name = "Course.findAll",
-//                query = "select c from Course c"
-//        )
-//)
+@NamedQueries(
+        @NamedQuery(
+                name = "Course.findAll",
+                query = "select c from Course c"
+        )
+)
 
 public class Course {
 

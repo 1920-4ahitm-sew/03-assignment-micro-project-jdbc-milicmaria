@@ -1,8 +1,6 @@
 package at.htl.adulteducationinstitute;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.sql.*;
 
@@ -18,8 +16,8 @@ public class CourseTest {
     static final String PASSWORD = "app";
     private static Connection conn;
 
-    @BeforeEach
-    public static void initJdbc(){
+    @BeforeAll
+    public static void initJdbc() {
         try {
             Class.forName(DRIVER_STRING);
             conn = DriverManager.getConnection(CONNECTION_STRING, USER, PASSWORD);
@@ -30,10 +28,30 @@ public class CourseTest {
                 + e.getMessage() + "\n");
             System.exit(1);
         }
+
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = "CREATE TABLE course (" +
+                    "id int constant id_pk primary key," +
+                    "courseName varchar2(50) not null," +
+                    "amountBookings number(50) not null)";
+            stmt.execute(sql);
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
     }
 
-    @AfterEach
+    @AfterAll
     public static void teardownJdbc() {
+
+        try {
+            conn.createStatement().execute("DROP TABLE course");
+            System.out.println("Tabelle COURSE gelöscht.");
+        } catch (SQLException e){
+            System.out.println("Tabelle COURSE konnte nicht gelöscht werden: \n"
+                    + e.getMessage());
+        }
+
         try {
             if (conn!= null|| !conn.isClosed()){
                 conn.close();
@@ -44,10 +62,10 @@ public class CourseTest {
         }
     }
 
-    @Test
-    public void firstTest(){
-        fail();
-    }
+//    @Test
+//    public void firstTest(){
+//        fail();
+//    }
 
     @Test
     public void dml() throws SQLException {

@@ -42,7 +42,7 @@ public class CourseEndpoint {
     }
 
     @PUT
-    @Path("put{id}")
+    @Path("put/{id}")
     public Response update(@PathParam("id") Long id, Course c) {
         Course updateCourse = getOne(id);
         updateCourse.setCourseName(c.getCourseName());
@@ -61,12 +61,14 @@ public class CourseEndpoint {
     }
 
     @DELETE
-    @Path("delete{id}")
+    @Path("delete/{id}")
     public Response delete(@PathParam("id") Long id) {
         Course c = getOne(id);
         delete(id);
 
         return Response.ok().build();
     }
+
+
 
 }

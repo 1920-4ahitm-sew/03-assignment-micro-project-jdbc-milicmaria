@@ -16,6 +16,7 @@ public class Course {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String courseName;
+    private String grade;
     private int amoutBookings;
     @ManyToOne
     private Lecturer lecturer;
@@ -23,8 +24,9 @@ public class Course {
     public Course() {
     }
 
-    public Course(String courseName, int amoutBookings) {
+    public Course(String courseName, String grade, int amoutBookings) {
         this.courseName = courseName;
+        this.grade = grade;
         this.amoutBookings = amoutBookings;
     }
 
@@ -50,6 +52,14 @@ public class Course {
 
     public void setAmoutBookings(int amoutBookings) {
         this.amoutBookings = amoutBookings;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
     }
 
     public Lecturer getLecturer() { return lecturer; }

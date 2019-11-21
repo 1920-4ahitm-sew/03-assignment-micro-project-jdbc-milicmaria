@@ -1,12 +1,15 @@
 package at.htl.adulteducationinstitute.control;
 
 import at.htl.adulteducationinstitute.entity.Course;
+import at.htl.adulteducationinstitute.entity.Lecturer;
+import at.htl.adulteducationinstitute.entity.Subject;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Destroyed;
 import javax.enterprise.context.Initialized;
 import javax.enterprise.event.Observes;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.io.BufferedReader;
@@ -17,6 +20,10 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.stream.Stream;
 
 @ApplicationScoped
@@ -24,6 +31,7 @@ import java.util.stream.Stream;
 public class InitBean {
 
     private static final String COURSES_FILE = "courses.csv";
+    private static final String LECTURER_FILE = "lecturers.csv";
 
     @PersistenceContext
     EntityManager em;
@@ -33,6 +41,7 @@ public class InitBean {
 //        em.persist(new Course("Deutsch B1", 13));
 
         importedCourses(COURSES_FILE);
+        importLecturersAndSubjects(LECTURER_FILE);
     }
 
     public void importedCourses(String coursesFile){
@@ -50,7 +59,7 @@ public class InitBean {
         try (Stream<String> stream = Files.lines(Paths.get(url.getPath()), StandardCharsets.UTF_8)) {
             stream.skip(1)
                     .map(s -> s.split(";"))
-                    .map(line -> new Course(line[0], Integer.parseInt(line[1])))
+                    .map(line -> new Course(line[0], line[1], Integer.parseInt(line[2])))
                     .forEach(em::merge);
 //            String[] rows = url.getFile().split(";");
 //            Course c = new Course();
@@ -62,6 +71,34 @@ public class InitBean {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public void importLecturersAndSubjects(String lecturersfile){
+        URL url = Thread.currentThread().getContextClassLoader()
+                .getResource(lecturersfile);
+        try (Stream<String> stream = Files.lines(Paths.get(url.getPath()), StandardCharsets.UTF_8)) {
+            stream.skip(1)
+                    .map(s -> s.split(";"))
+                    .forEach(this::persistLecturersAndSubjects);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void persistLecturersAndSubjects(String rows[]){
+        Subject subject = null;
+        try {
+            subject = em
+                    .createQuery("select s from Subject s where s.name = :NAME", Subject.class)
+                    .setParameter("NAME", rows[7])
+                    .getSingleResult();
+        } catch (NoResultException e){
+            subject = new Subject(rows[7]);
+            em.persist(subject);
+        }
+        em.persist(new Lecturer(rows[0], rows[1], rows[2], Integer.parseInt(rows[3]), Integer.parseInt(rows[4]), rows[5], Date.from(Instant.parse(rows[6])), subject));
 
     }
 

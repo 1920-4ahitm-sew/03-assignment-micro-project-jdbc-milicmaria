@@ -21,11 +21,14 @@ public class Lecturer {
     public Lecturer() {
     }
 
-    public Lecturer(String firstname, String lastname, String street, int houseNo, Subject subject) {
+    public Lecturer(String firstname, String lastname, String street, int houseNo, int zipCode, String town, Date hireDate, Subject subject) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.street = street;
         this.houseNo = houseNo;
+        this.zipCode = zipCode;
+        this.town = town;
+        this.hireDate = hireDate;
         this.subject = subject;
     }
 

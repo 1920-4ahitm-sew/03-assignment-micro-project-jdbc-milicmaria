@@ -1,11 +1,9 @@
 package at.htl.adulteducationinstitute.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "SUBJECT")
 public class Subject {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

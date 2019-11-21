@@ -20,6 +20,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -98,7 +100,12 @@ public class InitBean {
             subject = new Subject(rows[7]);
             em.persist(subject);
         }
-        em.persist(new Lecturer(rows[0], rows[1], rows[2], Integer.parseInt(rows[3]), Integer.parseInt(rows[4]), rows[5], Date.from(Instant.parse(rows[6])), subject));
+        try {
+            em.persist(new Lecturer(rows[0], rows[1], rows[2], Integer.parseInt(rows[3]),
+                    rows[4], rows[5], new SimpleDateFormat("dd-MM-yyyy").parse(rows[6]), subject));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
 

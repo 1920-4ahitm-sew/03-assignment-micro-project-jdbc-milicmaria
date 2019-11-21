@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "LECTURER")
 public class Lecturer {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,7 +13,7 @@ public class Lecturer {
     private String lastname;
     private String street;
     private int houseNo;
-    private int zipCode;
+    private String zipCode;
     private String town;
     private Date hireDate;
     @ManyToOne
@@ -21,7 +22,7 @@ public class Lecturer {
     public Lecturer() {
     }
 
-    public Lecturer(String firstname, String lastname, String street, int houseNo, int zipCode, String town, Date hireDate, Subject subject) {
+    public Lecturer(String firstname, String lastname, String street, int houseNo, String zipCode, String town, Date hireDate, Subject subject) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.street = street;
@@ -72,11 +73,11 @@ public class Lecturer {
         this.houseNo = houseNo;
     }
 
-    public int getZipCode() {
+    public String getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(int zipCode) {
+    public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 

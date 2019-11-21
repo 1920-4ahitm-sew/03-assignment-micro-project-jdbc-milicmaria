@@ -17,6 +17,8 @@ public class Course {
     private Long id;
     private String courseName;
     private int amoutBookings;
+    @ManyToOne
+    private Lecturer lecturer;
 
     public Course() {
     }
@@ -49,6 +51,10 @@ public class Course {
     public void setAmoutBookings(int amoutBookings) {
         this.amoutBookings = amoutBookings;
     }
+
+    public Lecturer getLecturer() { return lecturer; }
+
+    public void setLecturer(Lecturer lecturer) { this.lecturer = lecturer; }
 
     @Override
     public String toString() {
